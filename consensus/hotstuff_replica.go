@@ -177,7 +177,7 @@ func (m *ConsensusModule) validateProposal(msg *typesCons.HotstuffMessage) error
 		return err
 	}
 
-	// TODO(discuss): A nil QC implies a successfull CommitQC or TimeoutQC, which have been omitted intentionally since
+	// TODO(discuss): A nil QC implies a successful CommitQC or TimeoutQC, which have been omitted intentionally since
 	// they are not needed for consensus validity. However, if a QC is specified, it must be valid.
 	if msg.GetQuorumCertificate() != nil {
 		if err := m.validateQuorumCertificate(msg.GetQuorumCertificate()); err != nil {

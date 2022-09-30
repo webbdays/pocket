@@ -182,7 +182,7 @@ func (p *PrometheusTelemetryModule) GaugeAdd(name string, value float64) (promet
 
 func (p *PrometheusTelemetryModule) GaugeSub(name string, value float64) (prometheus.Gauge, error) {
 	if _, exists := p.gauges[name]; !exists {
-		return nil, NonExistentMetricErr("gauge", name, "substract from")
+		return nil, NonExistentMetricErr("gauge", name, "subtract from")
 	}
 
 	gg := p.gauges[name]

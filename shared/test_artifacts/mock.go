@@ -252,223 +252,223 @@ type MockUtilityConfig struct{}
 var _ modules.Params = &MockParams{}
 
 type MockParams struct {
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	BlocksPerSession int32 `protobuf:"varint,1,opt,name=blocks_per_session,json=blocksPerSession,proto3" json:"blocks_per_session,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppMinimumStake string `protobuf:"bytes,2,opt,name=app_minimum_stake,json=appMinimumStake,proto3" json:"app_minimum_stake,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	AppMaxChains int32 `protobuf:"varint,3,opt,name=app_max_chains,json=appMaxChains,proto3" json:"app_max_chains,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	AppBaselineStakeRate int32 `protobuf:"varint,4,opt,name=app_baseline_stake_rate,json=appBaselineStakeRate,proto3" json:"app_baseline_stake_rate,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	AppStakingAdjustment int32 `protobuf:"varint,5,opt,name=app_staking_adjustment,json=appStakingAdjustment,proto3" json:"app_staking_adjustment,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	AppUnstakingBlocks int32 `protobuf:"varint,6,opt,name=app_unstaking_blocks,json=appUnstakingBlocks,proto3" json:"app_unstaking_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	AppMinimumPauseBlocks int32 `protobuf:"varint,7,opt,name=app_minimum_pause_blocks,json=appMinimumPauseBlocks,proto3" json:"app_minimum_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	AppMaxPauseBlocks int32 `protobuf:"varint,8,opt,name=app_max_pause_blocks,json=appMaxPauseBlocks,proto3" json:"app_max_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodeMinimumStake string `protobuf:"bytes,9,opt,name=service_node_minimum_stake,json=serviceNodeMinimumStake,proto3" json:"service_node_minimum_stake,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ServiceNodeMaxChains int32 `protobuf:"varint,10,opt,name=service_node_max_chains,json=serviceNodeMaxChains,proto3" json:"service_node_max_chains,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	ServiceNodeUnstakingBlocks int32 `protobuf:"varint,11,opt,name=service_node_unstaking_blocks,json=serviceNodeUnstakingBlocks,proto3" json:"service_node_unstaking_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ServiceNodeMinimumPauseBlocks int32 `protobuf:"varint,12,opt,name=service_node_minimum_pause_blocks,json=serviceNodeMinimumPauseBlocks,proto3" json:"service_node_minimum_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	ServiceNodeMaxPauseBlocks int32 `protobuf:"varint,13,opt,name=service_node_max_pause_blocks,json=serviceNodeMaxPauseBlocks,proto3" json:"service_node_max_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ServiceNodesPerSession int32 `protobuf:"varint,14,opt,name=service_nodes_per_session,json=serviceNodesPerSession,proto3" json:"service_nodes_per_session,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	FishermanMinimumStake string `protobuf:"bytes,15,opt,name=fisherman_minimum_stake,json=fishermanMinimumStake,proto3" json:"fisherman_minimum_stake,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	FishermanMaxChains int32 `protobuf:"varint,16,opt,name=fisherman_max_chains,json=fishermanMaxChains,proto3" json:"fisherman_max_chains,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	FishermanUnstakingBlocks int32 `protobuf:"varint,17,opt,name=fisherman_unstaking_blocks,json=fishermanUnstakingBlocks,proto3" json:"fisherman_unstaking_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	FishermanMinimumPauseBlocks int32 `protobuf:"varint,18,opt,name=fisherman_minimum_pause_blocks,json=fishermanMinimumPauseBlocks,proto3" json:"fisherman_minimum_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	FishermanMaxPauseBlocks int32 `protobuf:"varint,19,opt,name=fisherman_max_pause_blocks,json=fishermanMaxPauseBlocks,proto3" json:"fisherman_max_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorMinimumStake string `protobuf:"bytes,20,opt,name=validator_minimum_stake,json=validatorMinimumStake,proto3" json:"validator_minimum_stake,omitempty"`
-	//@gotags: pokt:"val_type=BIGINT"
+	// @gotags: pokt:"val_type=BIGINT"
 	ValidatorUnstakingBlocks int32 `protobuf:"varint,21,opt,name=validator_unstaking_blocks,json=validatorUnstakingBlocks,proto3" json:"validator_unstaking_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ValidatorMinimumPauseBlocks int32 `protobuf:"varint,22,opt,name=validator_minimum_pause_blocks,json=validatorMinimumPauseBlocks,proto3" json:"validator_minimum_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ValidatorMaxPauseBlocks int32 `protobuf:"varint,23,opt,name=validator_max_pause_blocks,json=validatorMaxPauseBlocks,proto3" json:"validator_max_pause_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ValidatorMaximumMissedBlocks int32 `protobuf:"varint,24,opt,name=validator_maximum_missed_blocks,json=validatorMaximumMissedBlocks,proto3" json:"validator_maximum_missed_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ValidatorMaxEvidenceAgeInBlocks int32 `protobuf:"varint,25,opt,name=validator_max_evidence_age_in_blocks,json=validatorMaxEvidenceAgeInBlocks,proto3" json:"validator_max_evidence_age_in_blocks,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	ProposerPercentageOfFees int32 `protobuf:"varint,26,opt,name=proposer_percentage_of_fees,json=proposerPercentageOfFees,proto3" json:"proposer_percentage_of_fees,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	MissedBlocksBurnPercentage int32 `protobuf:"varint,27,opt,name=missed_blocks_burn_percentage,json=missedBlocksBurnPercentage,proto3" json:"missed_blocks_burn_percentage,omitempty"`
-	//@gotags: pokt:"val_type=SMALLINT"
+	// @gotags: pokt:"val_type=SMALLINT"
 	DoubleSignBurnPercentage int32 `protobuf:"varint,28,opt,name=double_sign_burn_percentage,json=doubleSignBurnPercentage,proto3" json:"double_sign_burn_percentage,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageDoubleSignFee string `protobuf:"bytes,29,opt,name=message_double_sign_fee,json=messageDoubleSignFee,proto3" json:"message_double_sign_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageSendFee string `protobuf:"bytes,30,opt,name=message_send_fee,json=messageSendFee,proto3" json:"message_send_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeFishermanFee string `protobuf:"bytes,31,opt,name=message_stake_fisherman_fee,json=messageStakeFishermanFee,proto3" json:"message_stake_fisherman_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeFishermanFee string `protobuf:"bytes,32,opt,name=message_edit_stake_fisherman_fee,json=messageEditStakeFishermanFee,proto3" json:"message_edit_stake_fisherman_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeFishermanFee string `protobuf:"bytes,33,opt,name=message_unstake_fisherman_fee,json=messageUnstakeFishermanFee,proto3" json:"message_unstake_fisherman_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseFishermanFee string `protobuf:"bytes,34,opt,name=message_pause_fisherman_fee,json=messagePauseFishermanFee,proto3" json:"message_pause_fisherman_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseFishermanFee string `protobuf:"bytes,35,opt,name=message_unpause_fisherman_fee,json=messageUnpauseFishermanFee,proto3" json:"message_unpause_fisherman_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageFishermanPauseServiceNodeFee string `protobuf:"bytes,36,opt,name=message_fisherman_pause_service_node_fee,json=messageFishermanPauseServiceNodeFee,proto3" json:"message_fisherman_pause_service_node_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageTestScoreFee string `protobuf:"bytes,37,opt,name=message_test_score_fee,json=messageTestScoreFee,proto3" json:"message_test_score_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageProveTestScoreFee string `protobuf:"bytes,38,opt,name=message_prove_test_score_fee,json=messageProveTestScoreFee,proto3" json:"message_prove_test_score_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeAppFee string `protobuf:"bytes,39,opt,name=message_stake_app_fee,json=messageStakeAppFee,proto3" json:"message_stake_app_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeAppFee string `protobuf:"bytes,40,opt,name=message_edit_stake_app_fee,json=messageEditStakeAppFee,proto3" json:"message_edit_stake_app_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeAppFee string `protobuf:"bytes,41,opt,name=message_unstake_app_fee,json=messageUnstakeAppFee,proto3" json:"message_unstake_app_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseAppFee string `protobuf:"bytes,42,opt,name=message_pause_app_fee,json=messagePauseAppFee,proto3" json:"message_pause_app_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseAppFee string `protobuf:"bytes,43,opt,name=message_unpause_app_fee,json=messageUnpauseAppFee,proto3" json:"message_unpause_app_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeValidatorFee string `protobuf:"bytes,44,opt,name=message_stake_validator_fee,json=messageStakeValidatorFee,proto3" json:"message_stake_validator_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeValidatorFee string `protobuf:"bytes,45,opt,name=message_edit_stake_validator_fee,json=messageEditStakeValidatorFee,proto3" json:"message_edit_stake_validator_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeValidatorFee string `protobuf:"bytes,46,opt,name=message_unstake_validator_fee,json=messageUnstakeValidatorFee,proto3" json:"message_unstake_validator_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseValidatorFee string `protobuf:"bytes,47,opt,name=message_pause_validator_fee,json=messagePauseValidatorFee,proto3" json:"message_pause_validator_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseValidatorFee string `protobuf:"bytes,48,opt,name=message_unpause_validator_fee,json=messageUnpauseValidatorFee,proto3" json:"message_unpause_validator_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeServiceNodeFee string `protobuf:"bytes,49,opt,name=message_stake_service_node_fee,json=messageStakeServiceNodeFee,proto3" json:"message_stake_service_node_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeServiceNodeFee string `protobuf:"bytes,50,opt,name=message_edit_stake_service_node_fee,json=messageEditStakeServiceNodeFee,proto3" json:"message_edit_stake_service_node_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeServiceNodeFee string `protobuf:"bytes,51,opt,name=message_unstake_service_node_fee,json=messageUnstakeServiceNodeFee,proto3" json:"message_unstake_service_node_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseServiceNodeFee string `protobuf:"bytes,52,opt,name=message_pause_service_node_fee,json=messagePauseServiceNodeFee,proto3" json:"message_pause_service_node_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseServiceNodeFee string `protobuf:"bytes,53,opt,name=message_unpause_service_node_fee,json=messageUnpauseServiceNodeFee,proto3" json:"message_unpause_service_node_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageChangeParameterFee string `protobuf:"bytes,54,opt,name=message_change_parameter_fee,json=messageChangeParameterFee,proto3" json:"message_change_parameter_fee,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AclOwner string `protobuf:"bytes,55,opt,name=acl_owner,json=aclOwner,proto3" json:"acl_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	BlocksPerSessionOwner string `protobuf:"bytes,56,opt,name=blocks_per_session_owner,json=blocksPerSessionOwner,proto3" json:"blocks_per_session_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppMinimumStakeOwner string `protobuf:"bytes,57,opt,name=app_minimum_stake_owner,json=appMinimumStakeOwner,proto3" json:"app_minimum_stake_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppMaxChainsOwner string `protobuf:"bytes,58,opt,name=app_max_chains_owner,json=appMaxChainsOwner,proto3" json:"app_max_chains_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppBaselineStakeRateOwner string `protobuf:"bytes,59,opt,name=app_baseline_stake_rate_owner,json=appBaselineStakeRateOwner,proto3" json:"app_baseline_stake_rate_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppStakingAdjustmentOwner string `protobuf:"bytes,60,opt,name=app_staking_adjustment_owner,json=appStakingAdjustmentOwner,proto3" json:"app_staking_adjustment_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppUnstakingBlocksOwner string `protobuf:"bytes,61,opt,name=app_unstaking_blocks_owner,json=appUnstakingBlocksOwner,proto3" json:"app_unstaking_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppMinimumPauseBlocksOwner string `protobuf:"bytes,62,opt,name=app_minimum_pause_blocks_owner,json=appMinimumPauseBlocksOwner,proto3" json:"app_minimum_pause_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	AppMaxPausedBlocksOwner string `protobuf:"bytes,63,opt,name=app_max_paused_blocks_owner,json=appMaxPausedBlocksOwner,proto3" json:"app_max_paused_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodeMinimumStakeOwner string `protobuf:"bytes,64,opt,name=service_node_minimum_stake_owner,json=serviceNodeMinimumStakeOwner,proto3" json:"service_node_minimum_stake_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodeMaxChainsOwner string `protobuf:"bytes,65,opt,name=service_node_max_chains_owner,json=serviceNodeMaxChainsOwner,proto3" json:"service_node_max_chains_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodeUnstakingBlocksOwner string `protobuf:"bytes,66,opt,name=service_node_unstaking_blocks_owner,json=serviceNodeUnstakingBlocksOwner,proto3" json:"service_node_unstaking_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodeMinimumPauseBlocksOwner string `protobuf:"bytes,67,opt,name=service_node_minimum_pause_blocks_owner,json=serviceNodeMinimumPauseBlocksOwner,proto3" json:"service_node_minimum_pause_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodeMaxPausedBlocksOwner string `protobuf:"bytes,68,opt,name=service_node_max_paused_blocks_owner,json=serviceNodeMaxPausedBlocksOwner,proto3" json:"service_node_max_paused_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ServiceNodesPerSessionOwner string `protobuf:"bytes,69,opt,name=service_nodes_per_session_owner,json=serviceNodesPerSessionOwner,proto3" json:"service_nodes_per_session_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	FishermanMinimumStakeOwner string `protobuf:"bytes,70,opt,name=fisherman_minimum_stake_owner,json=fishermanMinimumStakeOwner,proto3" json:"fisherman_minimum_stake_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	FishermanMaxChainsOwner string `protobuf:"bytes,71,opt,name=fisherman_max_chains_owner,json=fishermanMaxChainsOwner,proto3" json:"fisherman_max_chains_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	FishermanUnstakingBlocksOwner string `protobuf:"bytes,72,opt,name=fisherman_unstaking_blocks_owner,json=fishermanUnstakingBlocksOwner,proto3" json:"fisherman_unstaking_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	FishermanMinimumPauseBlocksOwner string `protobuf:"bytes,73,opt,name=fisherman_minimum_pause_blocks_owner,json=fishermanMinimumPauseBlocksOwner,proto3" json:"fisherman_minimum_pause_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	FishermanMaxPausedBlocksOwner string `protobuf:"bytes,74,opt,name=fisherman_max_paused_blocks_owner,json=fishermanMaxPausedBlocksOwner,proto3" json:"fisherman_max_paused_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorMinimumStakeOwner string `protobuf:"bytes,75,opt,name=validator_minimum_stake_owner,json=validatorMinimumStakeOwner,proto3" json:"validator_minimum_stake_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorUnstakingBlocksOwner string `protobuf:"bytes,76,opt,name=validator_unstaking_blocks_owner,json=validatorUnstakingBlocksOwner,proto3" json:"validator_unstaking_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorMinimumPauseBlocksOwner string `protobuf:"bytes,77,opt,name=validator_minimum_pause_blocks_owner,json=validatorMinimumPauseBlocksOwner,proto3" json:"validator_minimum_pause_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorMaxPausedBlocksOwner string `protobuf:"bytes,78,opt,name=validator_max_paused_blocks_owner,json=validatorMaxPausedBlocksOwner,proto3" json:"validator_max_paused_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorMaximumMissedBlocksOwner string `protobuf:"bytes,79,opt,name=validator_maximum_missed_blocks_owner,json=validatorMaximumMissedBlocksOwner,proto3" json:"validator_maximum_missed_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ValidatorMaxEvidenceAgeInBlocksOwner string `protobuf:"bytes,80,opt,name=validator_max_evidence_age_in_blocks_owner,json=validatorMaxEvidenceAgeInBlocksOwner,proto3" json:"validator_max_evidence_age_in_blocks_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	ProposerPercentageOfFeesOwner string `protobuf:"bytes,81,opt,name=proposer_percentage_of_fees_owner,json=proposerPercentageOfFeesOwner,proto3" json:"proposer_percentage_of_fees_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MissedBlocksBurnPercentageOwner string `protobuf:"bytes,82,opt,name=missed_blocks_burn_percentage_owner,json=missedBlocksBurnPercentageOwner,proto3" json:"missed_blocks_burn_percentage_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	DoubleSignBurnPercentageOwner string `protobuf:"bytes,83,opt,name=double_sign_burn_percentage_owner,json=doubleSignBurnPercentageOwner,proto3" json:"double_sign_burn_percentage_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageDoubleSignFeeOwner string `protobuf:"bytes,84,opt,name=message_double_sign_fee_owner,json=messageDoubleSignFeeOwner,proto3" json:"message_double_sign_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageSendFeeOwner string `protobuf:"bytes,85,opt,name=message_send_fee_owner,json=messageSendFeeOwner,proto3" json:"message_send_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeFishermanFeeOwner string `protobuf:"bytes,86,opt,name=message_stake_fisherman_fee_owner,json=messageStakeFishermanFeeOwner,proto3" json:"message_stake_fisherman_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeFishermanFeeOwner string `protobuf:"bytes,87,opt,name=message_edit_stake_fisherman_fee_owner,json=messageEditStakeFishermanFeeOwner,proto3" json:"message_edit_stake_fisherman_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeFishermanFeeOwner string `protobuf:"bytes,88,opt,name=message_unstake_fisherman_fee_owner,json=messageUnstakeFishermanFeeOwner,proto3" json:"message_unstake_fisherman_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseFishermanFeeOwner string `protobuf:"bytes,89,opt,name=message_pause_fisherman_fee_owner,json=messagePauseFishermanFeeOwner,proto3" json:"message_pause_fisherman_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseFishermanFeeOwner string `protobuf:"bytes,90,opt,name=message_unpause_fisherman_fee_owner,json=messageUnpauseFishermanFeeOwner,proto3" json:"message_unpause_fisherman_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageFishermanPauseServiceNodeFeeOwner string `protobuf:"bytes,91,opt,name=message_fisherman_pause_service_node_fee_owner,json=messageFishermanPauseServiceNodeFeeOwner,proto3" json:"message_fisherman_pause_service_node_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageTestScoreFeeOwner string `protobuf:"bytes,92,opt,name=message_test_score_fee_owner,json=messageTestScoreFeeOwner,proto3" json:"message_test_score_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageProveTestScoreFeeOwner string `protobuf:"bytes,93,opt,name=message_prove_test_score_fee_owner,json=messageProveTestScoreFeeOwner,proto3" json:"message_prove_test_score_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeAppFeeOwner string `protobuf:"bytes,94,opt,name=message_stake_app_fee_owner,json=messageStakeAppFeeOwner,proto3" json:"message_stake_app_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeAppFeeOwner string `protobuf:"bytes,95,opt,name=message_edit_stake_app_fee_owner,json=messageEditStakeAppFeeOwner,proto3" json:"message_edit_stake_app_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeAppFeeOwner string `protobuf:"bytes,96,opt,name=message_unstake_app_fee_owner,json=messageUnstakeAppFeeOwner,proto3" json:"message_unstake_app_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseAppFeeOwner string `protobuf:"bytes,97,opt,name=message_pause_app_fee_owner,json=messagePauseAppFeeOwner,proto3" json:"message_pause_app_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseAppFeeOwner string `protobuf:"bytes,98,opt,name=message_unpause_app_fee_owner,json=messageUnpauseAppFeeOwner,proto3" json:"message_unpause_app_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeValidatorFeeOwner string `protobuf:"bytes,99,opt,name=message_stake_validator_fee_owner,json=messageStakeValidatorFeeOwner,proto3" json:"message_stake_validator_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeValidatorFeeOwner string `protobuf:"bytes,100,opt,name=message_edit_stake_validator_fee_owner,json=messageEditStakeValidatorFeeOwner,proto3" json:"message_edit_stake_validator_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeValidatorFeeOwner string `protobuf:"bytes,101,opt,name=message_unstake_validator_fee_owner,json=messageUnstakeValidatorFeeOwner,proto3" json:"message_unstake_validator_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseValidatorFeeOwner string `protobuf:"bytes,102,opt,name=message_pause_validator_fee_owner,json=messagePauseValidatorFeeOwner,proto3" json:"message_pause_validator_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseValidatorFeeOwner string `protobuf:"bytes,103,opt,name=message_unpause_validator_fee_owner,json=messageUnpauseValidatorFeeOwner,proto3" json:"message_unpause_validator_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageStakeServiceNodeFeeOwner string `protobuf:"bytes,104,opt,name=message_stake_service_node_fee_owner,json=messageStakeServiceNodeFeeOwner,proto3" json:"message_stake_service_node_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageEditStakeServiceNodeFeeOwner string `protobuf:"bytes,105,opt,name=message_edit_stake_service_node_fee_owner,json=messageEditStakeServiceNodeFeeOwner,proto3" json:"message_edit_stake_service_node_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnstakeServiceNodeFeeOwner string `protobuf:"bytes,106,opt,name=message_unstake_service_node_fee_owner,json=messageUnstakeServiceNodeFeeOwner,proto3" json:"message_unstake_service_node_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessagePauseServiceNodeFeeOwner string `protobuf:"bytes,107,opt,name=message_pause_service_node_fee_owner,json=messagePauseServiceNodeFeeOwner,proto3" json:"message_pause_service_node_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageUnpauseServiceNodeFeeOwner string `protobuf:"bytes,108,opt,name=message_unpause_service_node_fee_owner,json=messageUnpauseServiceNodeFeeOwner,proto3" json:"message_unpause_service_node_fee_owner,omitempty"`
-	//@gotags: pokt:"val_type=STRING"
+	// @gotags: pokt:"val_type=STRING"
 	MessageChangeParameterFeeOwner string `protobuf:"bytes,109,opt,name=message_change_parameter_fee_owner,json=messageChangeParameterFeeOwner,proto3" json:"message_change_parameter_fee_owner,omitempty"`
 }
 

@@ -127,21 +127,25 @@ func (rc *Manager) init(configPath, genesisPath string) (config *runtimeConfig, 
 // bindEnvironmentVarsFromConfig scans the `runtimeConfig` struct to gather the keys of the individual values in the configuration so that we can instruct viper to bind environment variables to them
 //
 // For example, one of the call it makes is viper.BindEnv("persistence.postgres_url") to tell viper to look for that value if present in the environment
+// This is a well known issue as discussed in several StackOverflow posts and also https://github.com/spf13/viper/issues/188
 //
 // In short: this allows us configure anything via enviroment even if the corresponding configuration value is not defined with lower "precedence" as defined here: https://github.com/spf13/viper#why-viper:~:text=Viper%20uses%20the,default
 func bindEnvironmentVarsFromConfig() {
 	cfgType := reflect.TypeOf(runtimeConfig{})
-	cfgKeys := make([]interface{}, cfgType.NumField())
 	for i := 0; i < cfgType.NumField(); i++ {
-		cfgKeys[i] = cfgType.Field(i).Tag.Get("json")
-		subCfg := cfgType.Field(i).Type.Elem()
+		cfgField := cfgType.Field(i)
+		if !cfgField.IsExported() {
+			continue
+		}
+		cfgKey := cfgField.Tag.Get("json")
+		subCfg := cfgField.Type.Elem()
 		for j := 0; j < subCfg.NumField(); j++ {
 			field := subCfg.Field(j)
 			if !field.IsExported() {
 				continue
 			}
 			subCfgKey := subCfg.Field(j).Tag.Get("json")
-			fullCfgKey := fmt.Sprintf("%s.%s", cfgKeys[i], strings.Replace(subCfgKey, ",omitempty", "", -1))
+			fullCfgKey := fmt.Sprintf("%s.%s", cfgKey, strings.Replace(subCfgKey, ",omitempty", "", -1))
 			viper.BindEnv(fullCfgKey)
 		}
 	}

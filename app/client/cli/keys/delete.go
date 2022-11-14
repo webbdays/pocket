@@ -1,11 +1,12 @@
-package cmd
+package keys
 
 import (
 	"bufio"
+	"log"
+
 	"github.com/cosmos/cosmos-sdk/client/input"
 	"github.com/spf13/cobra"
 	"github.com/syndtr/goleveldb/leveldb"
-	"log"
 )
 
 const (
@@ -13,7 +14,7 @@ const (
 )
 
 // deleteCmd represents the delete command
-var deleteCmd = &cobra.Command{
+var DeleteCmd = &cobra.Command{
 	Use:   "delete <name> ...",
 	Short: "Delete the given key from the keystore",
 	Long: `Delete the public key from the backend keystore offline
@@ -61,10 +62,4 @@ func deleteKey(cmd *cobra.Command, args []string) error {
 	log.Printf("Key (%s) deleted!\n", name)
 
 	return nil
-}
-
-func init() {
-	rootCmd.AddCommand(deleteCmd)
-
-	// Local flags
 }

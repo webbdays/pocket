@@ -1,9 +1,10 @@
-package cmd
+package keys
 
 import (
 	"bufio"
 	"crypto/sha256"
 	"fmt"
+
 	"github.com/cosmos/go-bip39"
 	"github.com/spf13/cobra"
 
@@ -16,8 +17,8 @@ const (
 	mnemonicEntropySize = 256
 )
 
-// mnemonicCmd represents the mnemonic command
-var mnemonicCmd = &cobra.Command{
+// MmnemonicCmd represents the mnemonic command
+var MmnemonicCmd = &cobra.Command{
 	Use:   "mnemonic",
 	Short: "Computing BIP-39 mnemonic phrases",
 	Long:  `Computing and output seed phrases based on BIP-39 and system entropy. Passing your own entropy, use --unsafe-entropy`,
@@ -88,8 +89,8 @@ var mnemonicCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(mnemonicCmd)
+	//rootCmd.AddCommand(mnemonicCmd)
 
 	// Local Flags
-	mnemonicCmd.Flags().BoolP(flagUserEntropy, "u", false, "Prompt the user to supply their own entropy, instead of relying on the system")
+	MmnemonicCmd.Flags().BoolP(flagUserEntropy, "u", false, "Prompt the user to supply their own entropy, instead of relying on the system")
 }

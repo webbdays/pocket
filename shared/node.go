@@ -126,6 +126,8 @@ func (node *Node) Start() error {
 		event := node.GetBus().GetBusEvent()
 		if err := node.handleEvent(event); err != nil {
 			log.Println("Error handling event: ", err)
+		} else {
+			log.Println("Successfully handled event")
 		}
 	}
 }
@@ -177,8 +179,10 @@ func (node *Node) handleDebugEvent(anyMessage *anypb.Any) error {
 	case debug.DebugMessageAction_DEBUG_CONSENSUS_TOGGLE_PACE_MAKER_MODE:
 		return node.GetBus().GetConsensusModule().HandleDebugMessage(&debugMessage)
 	// Persistence Debug
+	// Should clear state & reset to genesis go here?
 	case debug.DebugMessageAction_DEBUG_SHOW_LATEST_BLOCK_IN_STORE:
-		fallthrough
+		return node.GetBus().GetPersistenceModule().HandleDebugMessage(&debugMessage)
+	// Default
 	default:
 		log.Printf("Debug message: %s \n", debugMessage.Message)
 	}

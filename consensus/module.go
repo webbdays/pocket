@@ -7,13 +7,12 @@ import (
 	"sync"
 
 	"github.com/pokt-network/pocket/consensus/leader_election"
+	consensusTelemetry "github.com/pokt-network/pocket/consensus/telemetry"
 	typesCons "github.com/pokt-network/pocket/consensus/types"
 	"github.com/pokt-network/pocket/shared/codec"
 	cryptoPocket "github.com/pokt-network/pocket/shared/crypto"
-	"google.golang.org/protobuf/types/known/anypb"
-
-	consensusTelemetry "github.com/pokt-network/pocket/consensus/telemetry"
 	"github.com/pokt-network/pocket/shared/modules"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 const (
@@ -248,7 +247,17 @@ func (m *consensusModule) HandleMessage(message *anypb.Any) error {
 			return err
 		}
 	case UtilityMessage:
-		panic("[WARN] UtilityMessage handling is not implemented by consensus yet...")
+		msg, err := codec.GetCodec().FromAny(message)
+		if err != nil {
+			return err
+		}
+		utilityMessage, ok := msg.(*typesCons.UtilityMessage)
+		if !ok {
+			return fmt.Errorf("failed to cast message to UtilityMessage")
+		}
+		if err := m.handleUtilityMessage(utilityMessage); err != nil {
+			return err
+		}
 	default:
 		return typesCons.ErrUnknownConsensusMessageType(message.MessageName())
 	}

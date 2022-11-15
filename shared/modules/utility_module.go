@@ -31,7 +31,7 @@ type UtilityContext interface {
 
 	// Validation operations
 
-	CheckTransaction(tx []byte) error
+	CheckTransaction(tx []byte) error // Validates the transaction and adds it to the mempool
 }
 
 type UnstakingActor interface {

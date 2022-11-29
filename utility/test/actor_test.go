@@ -3,6 +3,7 @@ package test
 import (
 	"encoding/hex"
 	"fmt"
+	"log"
 	"math"
 	"math/big"
 	"sort"
@@ -111,7 +112,7 @@ func TestUtilityContext_HandleMessageEditStake(t *testing.T) {
 			actor = getActorByAddr(t, ctx, addrBz, actorType)
 			test_artifacts.CleanupTest(ctx)
 
-			log.Println(testName + " - done"
+			log.Println(testName + " - done")
 		})
 	}
 }

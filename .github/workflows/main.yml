@@ -88,52 +88,53 @@ jobs:
           # only-new-issues: true
           args: --issues-exit-code=0 # TODO: Remove this once we fix all the issues.
 
+
   # TODO(@okdas): reuse artifacts built by the previous job instead
   # of going through the build process in container build job again
   # - figure out how to handle musl/alpine case if we want to support it
-  build-images:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # Build dev & prod images
-        imageType: [dev, prod]
-        osType: [debian] # Protoc maintainers do not supply a binary for alpine, so we either need to build it or use a different version of protoc
-    steps:
-      - uses: actions/checkout@v3
-      - name: Docker Setup QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Docker Metadata action
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/pokt-network/pocket-v1
-          tags: |
-            type=schedule${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=semver,pattern={{version}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=semver,pattern={{major}}.{{minor}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=semver,pattern={{major}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=ref,event=branch${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=ref,event=pr${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=sha${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-            type=raw,value=latest,enable={{is_default_branch}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
-          file: build/Dockerfile.${{ matrix.osType }}.${{ matrix.imageType }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            TARGET_GOLANG_VERSION=${{ env.TARGET_GOLANG_VERSION }}
+  # build-images:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       # Build dev & prod images
+  #       imageType: [dev, prod]
+  #       osType: [debian] # Protoc maintainers do not supply a binary for alpine, so we either need to build it or use a different version of protoc
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Docker Setup QEMU
+  #       uses: docker/setup-qemu-action@v2
+  #     - name: Docker Setup Buildx
+  #       uses: docker/setup-buildx-action@v2
+  #     - name: Docker Metadata action
+  #       id: meta
+  #       uses: docker/metadata-action@v4
+  #       with:
+  #         images: |
+  #           ghcr.io/pokt-network/pocket-v1
+  #         tags: |
+  #           type=schedule${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=semver,pattern={{version}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=semver,pattern={{major}}.{{minor}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=semver,pattern={{major}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=ref,event=branch${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=ref,event=pr${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=sha${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #           type=raw,value=latest,enable={{is_default_branch}}${{ matrix.imageType == 'dev' && ',suffix=-dev' || '' }}
+  #     - name: Login to GitHub Container Registry
+  #       uses: docker/login-action@v2
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@v3
+  #       with:
+  #         push: true
+  #         tags: ${{ steps.meta.outputs.tags }}
+  #         labels: ${{ steps.meta.outputs.labels }}
+  #         platforms: linux/amd64,linux/arm64
+  #         file: build/Dockerfile.${{ matrix.osType }}.${{ matrix.imageType }}
+  #         cache-from: type=gha
+  #         cache-to: type=gha,mode=max
+  #         build-args: |
+  #           TARGET_GOLANG_VERSION=${{ env.TARGET_GOLANG_VERSION }}

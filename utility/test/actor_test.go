@@ -63,8 +63,11 @@ func TestUtilityContext_HandleMessageStake(t *testing.T) {
 }
 
 func TestUtilityContext_HandleMessageEditStake(t *testing.T) {
-	for _, actorType := range actorTypes {
-		t.Run(fmt.Sprintf("%s.HandleMessageEditStake", actorType.String()), func(t *testing.T) {
+	for _, s := range actorTypes {
+		actorType := s // https://stackoverflow.com/a/73561510 don't see how that helps
+		testName := fmt.Sprintf("%s.HandleMessageEditStake", actorType.String())
+
+		t.Run(testName, func(t *testing.T) {
 			ctx := NewTestingUtilityContext(t, 0)
 			actor := getFirstActor(t, ctx, actorType)
 			addrBz, err := hex.DecodeString(actor.GetAddress())
@@ -77,11 +80,15 @@ func TestUtilityContext_HandleMessageEditStake(t *testing.T) {
 				ActorType: actorType,
 			}
 
+			log.Println(testName + " - before msgChainsEdited")
+
 			msgChainsEdited := proto.Clone(msg).(*typesUtil.MessageEditStake)
 			msgChainsEdited.Chains = defaultTestingChainsEdited
 
 			err = ctx.HandleEditStakeMessage(msgChainsEdited)
 			require.NoError(t, err, "handle edit stake message")
+
+			log.Println(testName + " - before getActorByAddr")
 
 			actor = getActorByAddr(t, ctx, addrBz, actorType)
 			if actorType != typesUtil.ActorType_Validator {
@@ -90,16 +97,21 @@ func TestUtilityContext_HandleMessageEditStake(t *testing.T) {
 			require.Equal(t, defaults.DefaultStakeAmountString, actor.GetStakedAmount(), "incorrect staked tokens")
 			require.Equal(t, typesUtil.HeightNotUsed, actor.GetUnstakingHeight(), "incorrect unstaking height")
 
+			log.Println(testName + " - before amountEdited")
 			amountEdited := defaults.DefaultAccountAmount.Add(defaults.DefaultAccountAmount, big.NewInt(1))
 			amountEditedString := typesUtil.BigIntToString(amountEdited)
 			msgAmountEdited := proto.Clone(msg).(*typesUtil.MessageEditStake)
 			msgAmountEdited.Amount = amountEditedString
 
+			log.Println(testName + " - before HandleEditStakeMessage")
 			err = ctx.HandleEditStakeMessage(msgAmountEdited)
 			require.NoError(t, err, "handle edit stake message")
 
+			log.Println(testName + " - before getActorByAddr")
 			actor = getActorByAddr(t, ctx, addrBz, actorType)
 			test_artifacts.CleanupTest(ctx)
+
+			log.Println(testName + " - done"
 		})
 	}
 }

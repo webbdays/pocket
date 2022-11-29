@@ -69,6 +69,8 @@ func TestUtilityContext_HandleMessageEditStake(t *testing.T) {
 		testName := fmt.Sprintf("%s.HandleMessageEditStake", actorType.String())
 
 		t.Run(testName, func(t *testing.T) {
+			log.Println(testName + " - begin")
+
 			ctx := NewTestingUtilityContext(t, 0)
 			actor := getFirstActor(t, ctx, actorType)
 			addrBz, err := hex.DecodeString(actor.GetAddress())

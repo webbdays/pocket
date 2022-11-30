@@ -97,3 +97,24 @@ func CleanupPostgresDocker(_ *testing.M, pool *dockertest.Pool, resource *docker
 
 // CLEANUP: Remove this since it's no longer used or necessary.
 func CleanupTest(u utility.UtilityContext) {}
+
+// func TailLogs() {
+// 	output := os.Stdout
+// 	writer := bufio.NewWriter(output)
+// 	ctx := context.Background()
+
+// 	opts := docker.LogsOptions{
+// 		Context: ctx,
+
+// 		Stderr:      true,
+// 		Stdout:      true,
+// 		Follow:      true,
+// 		Timestamps:  true,
+// 		RawTerminal: true,
+
+// 		Container: c.resource.Container.ID,
+
+// 		OutputStream: writer,
+// 	}
+
+// }

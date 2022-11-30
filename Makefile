@@ -312,6 +312,7 @@ test_all_with_json: generate_rpc_openapi # generate_mocks
 ## Run all go unit tests, output results & coverage into files
 test_all_with_coverage: generate_rpc_openapi # generate_mocks
 	go test -p 1 -json ./... -covermode=count -coverprofile=coverage.out | tee test_results.json | jq
+	exit "$${PIPESTATUS[0]}"
 
 .PHONY: test_race
 ## Identify all unit tests that may result in race conditions

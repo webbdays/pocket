@@ -56,7 +56,8 @@ jobs:
         run: make protogen_local && make mockgen && make generate_rpc_openapi
       - name: Create coverage report and run tests
         run: |
-          make test_all_with_coverage
+          set -euo pipefail
+          go test -p 1 -json ./... -covermode=count -coverprofile=coverage.out | tee test_results.json | jq
       - name: Output test failures
         if: ${{ failure() && env.TARGET_GOLANG_VERSION == matrix.go }}
         run: cat test_results.json | jq 'select(.Action == "fail")'

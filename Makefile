@@ -308,12 +308,10 @@ test_all: # generate_mocks
 test_all_with_json: generate_rpc_openapi # generate_mocks
 	go test -p 1 -json ./... > test_results.json
 
-.PHONY: test_all_with_coverage
-## Run all go unit tests, output results & coverage into files
-test_all_with_coverage: SHELL:=/bin/bash generate_rpc_openapi # generate_mocks
-	set -euo pipefail
-	go test -p 1 -json ./... -covermode=count -coverprofile=coverage.out | tee test_results.json | jq
-	exit "$${PIPESTATUS[0]}"
+# .PHONY: test_all_with_coverage
+# ## Run all go unit tests, output results & coverage into files
+# test_all_with_coverage: generate_rpc_openapi # generate_mocks
+# 	exit "$${PIPESTATUS[0]}"
 
 .PHONY: test_race
 ## Identify all unit tests that may result in race conditions

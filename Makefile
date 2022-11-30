@@ -310,7 +310,8 @@ test_all_with_json: generate_rpc_openapi # generate_mocks
 
 .PHONY: test_all_with_coverage
 ## Run all go unit tests, output results & coverage into files
-test_all_with_coverage: generate_rpc_openapi # generate_mocks
+test_all_with_coverage: SHELL:=/bin/bash generate_rpc_openapi # generate_mocks
+	set -euo pipefail
 	go test -p 1 -json ./... -covermode=count -coverprofile=coverage.out | tee test_results.json | jq
 	exit "$${PIPESTATUS[0]}"
 

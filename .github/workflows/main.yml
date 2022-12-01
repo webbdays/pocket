@@ -64,7 +64,7 @@ jobs:
         # We're utilizing `tee` above which can capture non-json stdout output, we also need to remove non-json lines.
         if: ${{ always() && env.TARGET_GOLANG_VERSION == matrix.go }}
         run: |
-          cat test_results.json | jq -R 'fromjson? | select(type == "object")' > tmp.json && mv tmp.json test_results.json
+          cat test_results.json | jq -c -R 'fromjson? | select(type == "object")' > tmp.json && mv tmp.json test_results.json
       - name: Upload test results
         if: ${{ always() && env.TARGET_GOLANG_VERSION == matrix.go }}
         uses: actions/upload-artifact@v3

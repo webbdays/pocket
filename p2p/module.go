@@ -128,8 +128,8 @@ func (m *p2pModule) Start() error {
 
 	if m.GetBus().GetPersistenceModule() == nil {
 		// we are getting called by the client and we use the "legacy behaviour"
-		// TODO (team): improve this.
-		addrBook, err = ActorToAddrBook(m.p2pCfg, m.bus.GetConsensusModule().ValidatorMap())
+		// TODO (deblasis): allow the client to get an addrBook without persistence... file? flag? something else?
+		// addrBook, err = ActorToAddrBook(m.p2pCfg, m.bus.GetConsensusModule().ValidatorMap())
 	} else {
 		addrBook, err = m.getAddrBookPerHeight(currentHeight)
 	}
@@ -178,11 +178,7 @@ func (m *p2pModule) getAddrBookPerHeight(height uint64) (typesP2P.AddrBook, erro
 	if err != nil {
 		return nil, err
 	}
-	validatorMap := make(modules.ValidatorMap, len(vals))
-	for _, v := range vals {
-		validatorMap[v.GetAddress()] = v
-	}
-	addrBook, err := ActorToAddrBook(m.p2pCfg, validatorMap)
+	addrBook, err := ActorToAddrBook(m.p2pCfg, vals)
 	if err != nil {
 		return nil, err
 	}

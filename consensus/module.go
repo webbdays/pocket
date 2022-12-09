@@ -268,10 +268,6 @@ func (m *consensusModule) CurrentStep() uint64 {
 	return uint64(m.Step)
 }
 
-func (m *consensusModule) ValidatorMap() modules.ValidatorMap { // TODO: This needs to be dynamically updated during various operations and network changes.
-	return typesCons.ValidatorMapToModulesValidatorMap(m.validatorMap)
-}
-
 // TODO(#256): Currently only used for testing purposes
 func (m *consensusModule) SetUtilityContext(utilityContext modules.UtilityContext) {
 	m.utilityContext = utilityContext

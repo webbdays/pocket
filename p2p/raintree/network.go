@@ -18,27 +18,54 @@ import (
 var _ typesP2P.Network = &rainTreeNetwork{}
 var _ modules.IntegratableModule = &rainTreeNetwork{}
 
+const mempoolMaxNonces = 1e6 // 1 million rolling nonces. The oldest will be pruned in favor of the newest when this threshold is reached
+
 type rainTreeNetwork struct {
 	bus modules.Bus
 
-	selfAddr cryptoPocket.Address
+	selfAddr         cryptoPocket.Address
+	addrBookProvider typesP2P.AddrBookProvider
 
 	peersManager *peersManager
 
 	// TODO (#278): What should we use for de-duping messages within P2P?
-	mempool map[uint64]struct{} // TODO (#278) replace map implementation (can grow unbounded)
+	mempool      map[uint64]struct{}
+	mempool_keys []uint64
 }
 
 func NewRainTreeNetwork(addr cryptoPocket.Address, addrBook typesP2P.AddrBook) typesP2P.Network {
-	pm, err := newPeersManager(addr, addrBook)
+	pm, err := newPeersManager(addr, addrBook, true)
 	if err != nil {
-		log.Println("[ERROR] Error initializing rainTreeNetwork peersManager: ", err)
+		log.Fatalf("[ERROR] Error initializing rainTreeNetwork peersManager: %v", err)
 	}
 
 	n := &rainTreeNetwork{
 		selfAddr:     addr,
 		peersManager: pm,
 		mempool:      make(map[uint64]struct{}),
+		mempool_keys: make([]uint64, 0, mempoolMaxNonces),
+	}
+
+	return typesP2P.Network(n)
+}
+
+func NewRainTreeNetworkWithAddrBookProvider(addr cryptoPocket.Address, addrBookProvider typesP2P.AddrBookProvider, height uint64) typesP2P.Network {
+	addrBook, err := addrBookProvider(height)
+	if err != nil {
+		log.Fatalf("[ERROR] Error getting addrBook from addrBookProvider: %v", err)
+	}
+
+	pm, err := newPeersManager(addr, addrBook, true)
+	if err != nil {
+		log.Fatalf("[ERROR] Error initializing rainTreeNetwork peersManager: %v", err)
+	}
+
+	n := &rainTreeNetwork{
+		selfAddr:         addr,
+		addrBookProvider: addrBookProvider,
+		peersManager:     pm,
+		mempool:          make(map[uint64]struct{}),
+		mempool_keys:     make([]uint64, 0, mempoolMaxNonces),
 	}
 
 	return typesP2P.Network(n)
@@ -179,6 +206,12 @@ func (n *rainTreeNetwork) HandleNetworkData(data []byte) ([]byte, error) {
 	}
 
 	n.mempool[rainTreeMsg.Nonce] = struct{}{}
+	n.mempool_keys = append(n.mempool_keys, rainTreeMsg.Nonce)
+	if len(n.mempool_keys) > mempoolMaxNonces {
+		// removing the oldest nonce and the oldest key from the slice
+		delete(n.mempool, n.mempool_keys[0])
+		n.mempool_keys = n.mempool_keys[1:]
+	}
 
 	// Return the data back to the caller so it can be handled by the app specific bus
 	return rainTreeMsg.Data, nil

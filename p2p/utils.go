@@ -9,11 +9,9 @@ import (
 	"github.com/pokt-network/pocket/shared/modules"
 )
 
-// CLEANUP(drewsky): These functions will turn into more of a "ActorToAddrBook" when we have a closer
-// integration with utility.
-func ActorToAddrBook(cfg modules.P2PConfig, validators map[string]modules.Actor) (typesP2P.AddrBook, error) {
+func ActorToAddrBook(cfg modules.P2PConfig, actors map[string]modules.Actor) (typesP2P.AddrBook, error) {
 	book := make(typesP2P.AddrBook, 0)
-	for _, v := range validators {
+	for _, v := range actors {
 		networkPeer, err := ActorToNetworkPeer(cfg, v)
 		if err != nil {
 			log.Println("[WARN] Error connecting to validator: ", err)
@@ -24,8 +22,6 @@ func ActorToAddrBook(cfg modules.P2PConfig, validators map[string]modules.Actor)
 	return book, nil
 }
 
-// CLEANUP(drewsky): These functions will turn into more of a "ActorToAddrBook" when we have a closer
-// integration with utility.
 func ActorToNetworkPeer(cfg modules.P2PConfig, v modules.Actor) (*typesP2P.NetworkPeer, error) {
 	conn, err := CreateDialer(cfg, v.GetGenericParam()) // service url
 	if err != nil {

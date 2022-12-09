@@ -31,10 +31,19 @@ func TestPocketEnvelope_GetContentType(t *testing.T) {
 			wantContentType: consensus.HotstuffMessageContentType,
 		},
 		{
+			msg:             &messaging.BeforeHeightChangedEvent{},
+			wantContentType: messaging.BeforeHeightChangedEventType,
+		},
+		{
+			msg:             &messaging.HeightChangedEvent{},
+			wantContentType: messaging.HeightChangedEventType,
+		},
+		{
 			msg:             &typesUtil.TransactionGossipMessage{},
 			wantContentType: utility.TransactionGossipMessageContentType,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("GetContentType %T", tt.msg), func(t *testing.T) {
 			packedMsg, err := messaging.PackMessage(tt.msg)

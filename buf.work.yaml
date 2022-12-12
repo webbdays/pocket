@@ -1,0 +1,15 @@
+version: v1
+directories:
+  - shared/messaging/proto
+  - shared/codec/proto
+  - persistence/indexer/proto
+  - persistence/proto
+  - utility/types/proto
+  - consensus/types/proto
+  - p2p/raintree/types/proto
+  - p2p/types/proto
+  - telemetry/proto
+  - logger/proto
+  - rpc/types/proto
+
+

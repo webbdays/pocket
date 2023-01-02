@@ -163,6 +163,8 @@ func (node *Node) handleEvent(message *messaging.PocketEnvelope) error {
 		return node.GetBus().GetConsensusModule().HandleMessage(message.Content)
 	case utility.TransactionGossipMessageContentType:
 		return node.GetBus().GetUtilityModule().HandleMessage(message.Content)
+	case consensus.PacemakerAccessContentType:
+		return node.GetBus().GetConsensusModule().HandlePacemakerMessage(message.Content)
 	case messaging.DebugMessageEventType:
 		return node.handleDebugMessage(message)
 	default:

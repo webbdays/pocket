@@ -194,10 +194,21 @@ func (p *paceMaker) RestartTimer() {
 	}()
 }
 
-func (p *paceMaker) InterruptRound() {
-	p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
+// func (p *paceMaker) InterruptRound() {
+// 	p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
 
-	p.consensusMod.round++
+// 	p.consensusMod.round++
+// 	p.startNextView(p.consensusMod.highPrepareQC, false)
+// }
+
+func (p *paceMaker) InterruptRound() {
+	//p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
+	currentRound := p.GetBus().GetConsensusModule().CurrentRound()
+	p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.GetBus().GetConsensusModule().CurrentHeight(), typesCons.HotstuffStep(p.GetBus().GetConsensusModule().CurrentStep()), currentRound))
+	currentRound++
+
+	//p.GetBus().GetConsensusModule().setround(currentRound)
+
 	p.startNextView(p.consensusMod.highPrepareQC, false)
 }
 

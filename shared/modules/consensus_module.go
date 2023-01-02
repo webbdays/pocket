@@ -23,6 +23,7 @@ type ConsensusModule interface {
 	HandleMessage(*anypb.Any) error
 	// TODO(gokhan): move it into a debug module
 	HandleDebugMessage(*messaging.DebugMessage) error
+	HandlePacemakerMessage(*anypb.Any) error
 
 	// Consensus State Accessors
 	CurrentHeight() uint64

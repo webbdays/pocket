@@ -26,6 +26,7 @@ const (
 	ByzantineThreshold = float64(2) / float64(3)
 
 	HotstuffMessageContentType = "consensus.HotstuffMessage"
+	PacemakerAccessContentType = "consensus.PacemakerAccessMessage"
 )
 
 var (

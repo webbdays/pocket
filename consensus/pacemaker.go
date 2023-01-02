@@ -4,11 +4,14 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 	timePkg "time"
 
 	consensusTelemetry "github.com/pokt-network/pocket/consensus/telemetry"
 	typesCons "github.com/pokt-network/pocket/consensus/types"
+	"github.com/pokt-network/pocket/shared/messaging"
 	"github.com/pokt-network/pocket/shared/modules"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 const (
@@ -194,33 +197,94 @@ func (p *paceMaker) RestartTimer() {
 	}()
 }
 
-// func (p *paceMaker) InterruptRound() {
-// 	p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
-
-// 	p.consensusMod.round++
-// 	p.startNextView(p.consensusMod.highPrepareQC, false)
-// }
-
 func (p *paceMaker) InterruptRound() {
-	//p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
 	currentRound := p.GetBus().GetConsensusModule().CurrentRound()
 	p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.GetBus().GetConsensusModule().CurrentHeight(), typesCons.HotstuffStep(p.GetBus().GetConsensusModule().CurrentStep()), currentRound))
+	//log.Printf("\n\n\n InterruptRound pre-call Current Round is: %d", currentRound)
 	currentRound++
 
-	//p.GetBus().GetConsensusModule().setround(currentRound)
+	pacemakerMesage := &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_ROUND,
+		Function: &typesCons.PacemakerMessage_Round{
+			Round: &typesCons.SetRound{
+				Round: currentRound,
+			},
+		},
+	}
 
+	anyProto, err := anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+
+	e := &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+
+	//TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	//! If bus is busy, currently 5 microseconds sleep period will not be enough and tests will fail.
+	//! We must confirm the event is consumed in the bust, and then continue.
+	time.Sleep(5 * time.Microsecond)
+
+	//log.Printf("\n\n InterruptRound POST-call Current Round is: %d", p.consensusMod.round)
+	//log.Printf("\n\n Called Current Round is: %d", p.GetBus().GetConsensusModule().CurrentRound())
 	p.startNextView(p.consensusMod.highPrepareQC, false)
 }
 
 func (p *paceMaker) NewHeight() {
-	p.consensusMod.nodeLog(typesCons.PacemakerNewHeight(p.consensusMod.CurrentHeight() + 1))
+	currentHeight := p.GetBus().GetConsensusModule().CurrentHeight()
+	currentHeight++
+	p.consensusMod.nodeLog(typesCons.PacemakerNewHeight(currentHeight))
 
 	p.consensusMod.height++
-	p.consensusMod.resetForNewHeight()
+	pacemakerMesage := &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_HEIGHT,
+		Function: &typesCons.PacemakerMessage_Height{
+			Height: &typesCons.SetHeight{
+				Height: currentHeight,
+			},
+		},
+	}
+
+	anyProto, err := anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+	//log.Printf("\n\n InterruptRound PRE-call Current Height is: %d", p.consensusMod.height)
+	e := &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+
+	// //TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	// //! If bus is busy, currently 5 microseconds sleep period will not be enough and tests will fail.
+	// //! We must confirm the event is consumed in the bust, and then continue.
+	time.Sleep(5 * time.Microsecond)
+
+	// log.Printf("InterruptRound POST-call Current Height is: %d ", p.consensusMod.height)
+	// log.Printf("InterruptRound p.mod. POST-call Current Height is: %d \n\n\n", p.GetBus().GetConsensusModule().CurrentRound())
+
+	//p.consensusMod.resetForNewHeight()
+	pacemakerMesage = &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_RESET_FOR_NEW_HEIGHT,
+	}
+
+	anyProto, err = anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+
+	e = &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+
+	//TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	//! If bus is busy, currently 5 microseconds sleep period will not be enough and tests will fail.
+	//! We must confirm the event is consumed in the bust, and then continue.
+	time.Sleep(5 * time.Microsecond)
 
 	p.startNextView(nil, false) // TODO(design): We are omitting CommitQC and TimeoutQC here.
 
-	p.consensusMod.
+	p.
 		GetBus().
 		GetTelemetryModule().
 		GetTimeSeriesAgent().

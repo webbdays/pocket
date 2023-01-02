@@ -3,6 +3,8 @@ package consensus;
 
 //import "google/protobuf/any.proto";
 
+import "hotstuff_types.proto";
+
 option go_package = "github.com/pokt-network/pocket/consensus/types";
 
 enum PacemakerMessageType {
@@ -10,6 +12,9 @@ enum PacemakerMessageType {
     PACEMAKER_MESSAGE_SET_ROUND = 1;
     PACEMAKER_MESSAGE_SET_STEP = 2;
     PACEMAKER_MESSAGE_RESET_FOR_NEW_HEIGHT = 3;
+    PACEMAKER_MESSAGE_CLEAR_LEADER_MESSAGE_POOL =4;
+    PACEMAKER_MESSAGE_RELEASE_UTILITY_CONTEXT =5;
+    PACEMAKER_MESSAGE_BROADCAST_HOTSTUFF_MESSAGE_TO_NODES =6;
 }
 
 message SetHeight {
@@ -30,5 +35,6 @@ message PacemakerMessage  {
         SetHeight height = 2;  
         SetRound round = 3;  
         SetStep step = 4;
+        consensus.HotstuffMessage message = 5;
     }
 }

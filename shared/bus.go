@@ -137,6 +137,10 @@ func (m *bus) GetBusEvent() *messaging.PocketEnvelope {
 	return &e
 }
 
+// func (m *bus) IsBusEmpty() bool {
+// 	return len(m.channel) == 0
+// }
+
 func (m *bus) GetEventBus() modules.EventsChannel {
 	return m.channel
 }

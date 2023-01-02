@@ -38,18 +38,30 @@ func (m *consensusModule) HandlePacemakerMessage(pacemakerMessage *anypb.Any) er
 }
 
 func (m *consensusModule) handlePaceMakerMessage(pacemakerMsg *typesCons.PacemakerMessage) error {
+
 	switch pacemakerMsg.Action {
 	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_HEIGHT:
-		//log.Printf("\n pacemakerMsg SetHeight Called Via Bus, Height is: %d", pacemakerMsg.GetHeight().Height)
 		m.height = pacemakerMsg.GetHeight().Height
-		//log.Printf(" pacemaker_handler New Height is: %d \n\n\n", m.height)
+		log.Printf("handlePaceMakerMessage Height is: %d", m.height)
 	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_ROUND:
-		//log.Printf("\n pacemaker_handler SetRound Called Via Bus, Round is: %d", pacemakerMsg.GetRound().Round)
 		m.round = pacemakerMsg.GetRound().Round
-		//log.Printf("In pacemaker_handler New Round is: %d \n\n\n", m.round)
+	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_STEP:
+		m.step = typesCons.HotstuffStep(pacemakerMsg.GetStep().Step)
 	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_RESET_FOR_NEW_HEIGHT:
-		//log.Printf("\n pacemaker_handler Reset for new round Called Via Bus")
 		m.resetForNewHeight()
+	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_CLEAR_LEADER_MESSAGE_POOL:
+		m.clearLeader()
+		m.clearMessagesPool()
+	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_RELEASE_UTILITY_CONTEXT:
+		if m.utilityContext != nil {
+			if err := m.utilityContext.Release(); err != nil {
+				log.Println("[WARN] Failed to release utility context: ", err)
+				return err
+			}
+			m.utilityContext = nil
+		}
+	case typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_BROADCAST_HOTSTUFF_MESSAGE_TO_NODES:
+		m.broadcastToNodes(pacemakerMsg.GetMessage())
 	default:
 		log.Printf("\n\n Unexpected case, message Action: %s \n\n", &pacemakerMsg.Action)
 	}

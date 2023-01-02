@@ -25,6 +25,7 @@ type Bus interface {
 	GetTelemetryModule() TelemetryModule
 	GetLoggerModule() LoggerModule
 	GetRPCModule() RPCModule
+	//IsBusEmpty() bool
 
 	// Runtime
 	GetRuntimeMgr() RuntimeMgr

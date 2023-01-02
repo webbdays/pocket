@@ -154,7 +154,8 @@ func (p *paceMaker) ValidateMessage(m *typesCons.HotstuffMessage) error {
 
 	// Pacemaker catch up! Node is synched to the right height, but on a previous step/round so we just jump to the latest state.
 	if m.Round > currentRound || (m.Round == currentRound && m.Step > p.consensusMod.step) {
-		p.consensusMod.nodeLog(typesCons.PacemakerCatchup(currentHeight, uint64(p.consensusMod.step), currentRound, m.Height, uint64(m.Step), m.Round))
+		// TODO: add logging
+		//p.consensusMod.nodeLog(typesCons.PacemakerCatchup(currentHeight, uint64(p.consensusMod.step), currentRound, m.Height, uint64(m.Step), m.Round))
 		p.consensusMod.step = m.Step
 		p.consensusMod.round = m.Round
 
@@ -188,7 +189,8 @@ func (p *paceMaker) RestartTimer() {
 		select {
 		case <-ctx.Done():
 			if ctx.Err() == context.DeadlineExceeded {
-				p.consensusMod.nodeLog(typesCons.PacemakerTimeout(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
+				// TODO: add logging
+				//p.consensusMod.nodeLog(typesCons.PacemakerTimeout(p.consensusMod.CurrentHeight(), p.consensusMod.step, p.consensusMod.round))
 				p.InterruptRound()
 			}
 		case <-clock.After(stepTimeout + 30*timePkg.Millisecond): // Adding 30ms to the context timeout to avoid race condition.
@@ -199,8 +201,8 @@ func (p *paceMaker) RestartTimer() {
 
 func (p *paceMaker) InterruptRound() {
 	currentRound := p.GetBus().GetConsensusModule().CurrentRound()
-	p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.GetBus().GetConsensusModule().CurrentHeight(), typesCons.HotstuffStep(p.GetBus().GetConsensusModule().CurrentStep()), currentRound))
-	//log.Printf("\n\n\n InterruptRound pre-call Current Round is: %d", currentRound)
+	// TODO: add logging
+	//p.consensusMod.nodeLog(typesCons.PacemakerInterrupt(p.GetBus().GetConsensusModule().CurrentHeight(), typesCons.HotstuffStep(p.GetBus().GetConsensusModule().CurrentStep()), currentRound))
 	currentRound++
 
 	pacemakerMesage := &typesCons.PacemakerMessage{
@@ -226,61 +228,55 @@ func (p *paceMaker) InterruptRound() {
 	//! We must confirm the event is consumed in the bust, and then continue.
 	time.Sleep(5 * time.Microsecond)
 
-	//log.Printf("\n\n InterruptRound POST-call Current Round is: %d", p.consensusMod.round)
-	//log.Printf("\n\n Called Current Round is: %d", p.GetBus().GetConsensusModule().CurrentRound())
 	p.startNextView(p.consensusMod.highPrepareQC, false)
 }
 
 func (p *paceMaker) NewHeight() {
 	currentHeight := p.GetBus().GetConsensusModule().CurrentHeight()
 	currentHeight++
-	p.consensusMod.nodeLog(typesCons.PacemakerNewHeight(currentHeight))
+	// TODO: add logging
+	//p.consensusMod.nodeLog(typesCons.PacemakerNewHeight(currentHeight))
 
 	p.consensusMod.height++
+	// pacemakerMesage := &typesCons.PacemakerMessage{
+	// 	Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_HEIGHT,
+	// 	Function: &typesCons.PacemakerMessage_Height{
+	// 		Height: &typesCons.SetHeight{
+	// 			Height: currentHeight,
+	// 		},
+	// 	},
+	// }
+
+	// anyProto, err := anypb.New(pacemakerMesage)
+	// if err != nil {
+	// 	log.Println("[WARN] NewHeight: Failed to convert paceMaker message to proto: ", err)
+	// 	return
+	// }
+	// log.Printf("NewHeight PRE-call Current Height is: %d", p.consensusMod.height)
+	// e := &messaging.PocketEnvelope{Content: anyProto}
+	// p.GetBus().PublishEventToBus(e)
+	// time.Sleep(5 * time.Microsecond)
+
+	log.Printf("NewHeight POST-call Current Height is: %d ", p.consensusMod.height)
+	log.Printf("InterruptRound p.mod. POST-call Current Height is: %d \n\n\n", p.GetBus().GetConsensusModule().CurrentRound())
+
+	//p.consensusMod.resetForNewHeight()
+
 	pacemakerMesage := &typesCons.PacemakerMessage{
-		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_HEIGHT,
-		Function: &typesCons.PacemakerMessage_Height{
-			Height: &typesCons.SetHeight{
-				Height: currentHeight,
-			},
-		},
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_RESET_FOR_NEW_HEIGHT,
 	}
 
 	anyProto, err := anypb.New(pacemakerMesage)
 	if err != nil {
-		log.Println("[WARN] Failed to interrupt round: ", err)
+		log.Println("[WARN] NewHeight: Failed to convert paceMaker message to proto: ", err)
 		return
 	}
-	//log.Printf("\n\n InterruptRound PRE-call Current Height is: %d", p.consensusMod.height)
+
 	e := &messaging.PocketEnvelope{Content: anyProto}
 	p.GetBus().PublishEventToBus(e)
 
-	// //TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
-	// //! If bus is busy, currently 5 microseconds sleep period will not be enough and tests will fail.
-	// //! We must confirm the event is consumed in the bust, and then continue.
-	time.Sleep(5 * time.Microsecond)
-
-	// log.Printf("InterruptRound POST-call Current Height is: %d ", p.consensusMod.height)
-	// log.Printf("InterruptRound p.mod. POST-call Current Height is: %d \n\n\n", p.GetBus().GetConsensusModule().CurrentRound())
-
-	//p.consensusMod.resetForNewHeight()
-	pacemakerMesage = &typesCons.PacemakerMessage{
-		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_RESET_FOR_NEW_HEIGHT,
-	}
-
-	anyProto, err = anypb.New(pacemakerMesage)
-	if err != nil {
-		log.Println("[WARN] Failed to interrupt round: ", err)
-		return
-	}
-
-	e = &messaging.PocketEnvelope{Content: anyProto}
-	p.GetBus().PublishEventToBus(e)
-
 	//TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
-	//! If bus is busy, currently 5 microseconds sleep period will not be enough and tests will fail.
-	//! We must confirm the event is consumed in the bust, and then continue.
-	time.Sleep(5 * time.Microsecond)
+	time.Sleep(1 * time.Millisecond)
 
 	p.startNextView(nil, false) // TODO(design): We are omitting CommitQC and TimeoutQC here.
 
@@ -297,6 +293,7 @@ func (p *paceMaker) startNextView(qc *typesCons.QuorumCertificate, forceNextView
 	// DISCUSS: Should we lock the consensus module here?
 
 	p.consensusMod.step = NewRound
+
 	p.consensusMod.clearLeader()
 	p.consensusMod.clearMessagesPool()
 	// TECHDEBT: This should be avoidable altogether
@@ -337,3 +334,118 @@ func (p *paceMaker) getStepTimeout(round uint64) timePkg.Duration {
 	baseTimeout := timePkg.Duration(int64(timePkg.Millisecond) * int64(p.pacemakerCfg.GetTimeoutMsec()))
 	return baseTimeout
 }
+
+/*
+func (p *paceMaker) startNextView(qc *typesCons.QuorumCertificate, forceNextView bool) {
+	// DISCUSS: Should we lock the consensus module here?
+
+	//p.consensusMod.step = NewRound
+	//HotstuffStep_HOTSTUFF_STEP_NEWROUND  HotstuffStep = 1
+	pacemakerMesage := &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_SET_STEP,
+		Function: &typesCons.PacemakerMessage_Step{
+			Step: &typesCons.SetStep{
+				Step: 1,
+			},
+		},
+	}
+
+	anyProto, err := anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+	log.Printf("\n\n startNextView PRE-call Current step is: %s", p.consensusMod.step)
+	e := &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+	log.Printf("\n\n startNextView POST-call Current step is: %s", p.consensusMod.step)
+
+	// //TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	time.Sleep(5 * time.Microsecond)
+
+	//p.consensusMod.clearLeader()
+	//p.consensusMod.clearMessagesPool()
+
+	pacemakerMesage = &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_CLEAR_LEADER_MESSAGE_POOL,
+	}
+
+	anyProto, err = anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+
+	e = &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+
+	//TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	time.Sleep(5 * time.Microsecond)
+
+	// TECHDEBT: This should be avoidable altogether
+	// if p.consensusMod.utilityContext != nil {
+	// 	if err := p.consensusMod.utilityContext.Release(); err != nil {
+	// 		log.Println("[WARN] Failed to release utility context: ", err)
+	// 	}
+	// 	p.consensusMod.utilityContext = nil
+	// }
+
+	pacemakerMesage = &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_RELEASE_UTILITY_CONTEXT,
+	}
+
+	anyProto, err = anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+
+	e = &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+
+	//TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	time.Sleep(5 * time.Microsecond)
+
+	// TECHDEBT: This if structure for debug purposes only; think of a way to externalize it from the main consensus flow...
+	if p.manualMode && !forceNextView {
+		p.quorumCertificate = qc
+		return
+	}
+
+	hotstuffMessage := &typesCons.HotstuffMessage{
+		Type:          Propose,
+		Height:        p.GetBus().GetConsensusModule().CurrentHeight(),
+		Step:          NewRound,
+		Round:         p.GetBus().GetConsensusModule().CurrentRound(),
+		Block:         nil,
+		Justification: nil, // Set below if qc is not nil
+	}
+
+	if qc != nil {
+		hotstuffMessage.Justification = &typesCons.HotstuffMessage_QuorumCertificate{
+			QuorumCertificate: qc,
+		}
+	}
+
+	p.RestartTimer()
+	//p.consensusMod.broadcastToNodes(hotstuffMessage)
+	pacemakerMesage = &typesCons.PacemakerMessage{
+		Action: typesCons.PacemakerMessageType_PACEMAKER_MESSAGE_BROADCAST_HOTSTUFF_MESSAGE_TO_NODES,
+		Function: &typesCons.PacemakerMessage_Message{
+			Message: hotstuffMessage,
+		},
+	}
+
+	anyProto, err = anypb.New(pacemakerMesage)
+	if err != nil {
+		log.Println("[WARN] Failed to interrupt round: ", err)
+		return
+	}
+	//log.Printf("\n\n InterruptRound PRE-call Current Height is: %d", p.consensusMod.height)
+	e = &messaging.PocketEnvelope{Content: anyProto}
+	p.GetBus().PublishEventToBus(e)
+
+	// //TODO! Remove sleep statement. This is currently highly fragile, not suitable for production.
+	time.Sleep(5 * time.Microsecond)
+}
+*/

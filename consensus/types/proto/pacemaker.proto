@@ -1,0 +1,29 @@
+syntax = "proto3";
+package consensus;
+
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/pokt-network/pocket/consensus/types";
+
+enum PacemakerMessageType {
+    PACEMAKER_MESSAGE_SET_HEIGHT = 0;
+    PACEMAKER_MESSAGE_SET_ROUND = 1;
+    PACEMAKER_MESSAGE_SET_STEP = 2;
+}
+
+message Height {
+    uint64 height = 1;
+}
+
+message Round {
+    uint64 round = 1;
+}
+
+message Step {
+    uint64 step = 1;
+}
+
+message PacemakerMessage  {
+    PacemakerMessageType action = 1;
+    google.protobuf.Any message = 2;
+}

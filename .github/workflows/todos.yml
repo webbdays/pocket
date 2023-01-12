@@ -12,8 +12,8 @@ on:
     branches: # do not set multiple branches, todos might be added and then get referenced by themselves in case of a merge
       - main
       - master
-env:
-  keywords: '[" TODO", " TECHDEBT", " IMPROVE", " DISCUSS", " INCOMPLETE", " INVESTIGATE", " CLEANUP", " HACK", " REFACTOR", " CONSIDERATION", " TODO_IN_THIS_COMMIT", " DISCUSS_IN_THIS_COMMIT", " CONSOLIDATE", " DEPRECATE", " ADDTEST", " RESEARCH" ]'
+# env:
+#   keywords: '[" TODO", " TECHDEBT", " IMPROVE", " DISCUSS", " INCOMPLETE", " INVESTIGATE", " CLEANUP", " HACK", " REFACTOR", " CONSIDERATION", " TODO_IN_THIS_COMMIT", " DISCUSS_IN_THIS_COMMIT", " CONSOLIDATE", " DEPRECATE", " ADDTEST", " RESEARCH" ]'
 permissions:
   issues: write
   repository-projects: read
@@ -30,6 +30,6 @@ jobs:
         uses: ./.github/actions/todo-issue
         with:
           excludePattern: '^(node_modules/)'
-          keywords : ${{ fromJson(env.keywords) }}
+          keywords : '" TODO", " TECHDEBT", " IMPROVE", " DISCUSS", " INCOMPLETE", " INVESTIGATE", " CLEANUP", " HACK", " REFACTOR", " CONSIDERATION", " TODO_IN_THIS_COMMIT", " DISCUSS_IN_THIS_COMMIT", " CONSOLIDATE", " DEPRECATE", " ADDTEST", " RESEARCH"'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

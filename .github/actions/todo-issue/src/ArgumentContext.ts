@@ -1,7 +1,9 @@
 import {context} from '@actions/github';
 import {getInput} from 'action-input-parser';
-
+console.log("keywords : here are : ", getInput('keywords', {type: 'array', default: ['TODO']}))
 export const argumentContext = {
+
+    
 
     keywords: getInput('keywords', {type: 'array', default: ['TODO']}) as Array<string>,
     bodyKeywords: getInput('bodyKeywords', {type: 'array', default: []}) as Array<string>,

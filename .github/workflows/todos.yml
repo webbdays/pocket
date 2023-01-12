@@ -30,6 +30,6 @@ jobs:
         uses: ./.github/actions/todo-issue
         with:
           excludePattern: '^(node_modules/)'
-          keywords : '" TODO", " TECHDEBT", " IMPROVE", " DISCUSS", " INCOMPLETE", " INVESTIGATE", " CLEANUP", " HACK", " REFACTOR", " CONSIDERATION", " TODO_IN_THIS_COMMIT", " DISCUSS_IN_THIS_COMMIT", " CONSOLIDATE", " DEPRECATE", " ADDTEST", " RESEARCH"'
+          keywords : [ TODO, TECHDEBT , IMPROVE ,  DISCUSS, INCOMPLETE",  INVESTIGATE,  CLEANUP",  HACK,  REFACTOR,  CONSIDERATION,  TODO_IN_THIS_COMMIT,  DISCUSS_IN_THIS_COMMIT,  CONSOLIDATE,  DEPRECATE, ADDTEST,  RESEARCH ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

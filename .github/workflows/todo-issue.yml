@@ -4,12 +4,16 @@ name: Create issues from TODOs
 on:
   workflow_dispatch:
     inputs:
-      
       importAll:
         default: 'true'
         required: false
         type: boolean
         description: Enable, if you want to import all TODOs. Runs on checked out branch! Only use if you're sure what you are doing.
+      keywords:
+        required: true
+        type: string
+        description: keywords for todos
+
   push:
     branches: # do not set multiple branches, todos might be added and then get referenced by themselves in case of a merge
       - todo-issue-test
@@ -30,7 +34,7 @@ jobs:
         uses: derjuulsn/todo-issue@main
         with:
           excludePattern: ''
-          keywords: $(' TODO', ' TECHDEBT', ' IMPROVE', ' DISCUSS', ' INCOMPLETE', ' INVESTIGATE', ' CLEANUP', ' HACK', ' REFACTOR', ' CONSIDERATION' , ' TODO_IN_THIS_COMMIT', ' DISCUSS_IN_THIS_COMMIT', ' CONSOLIDATE', ' DEPRECATE', ' ADDTEST', ' RESEARCH')
+          keywords: ${{ [' TODO', ' TECHDEBT', ' IMPROVE', ' DISCUSS', ' INCOMPLETE', ' INVESTIGATE', ' CLEANUP', ' HACK', ' REFACTOR', ' CONSIDERATION' , ' TODO_IN_THIS_COMMIT', ' DISCUSS_IN_THIS_COMMIT', ' CONSOLIDATE', ' DEPRECATE', ' ADDTEST', ' RESEARCH'] }}
           titleSimilarity: 100
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

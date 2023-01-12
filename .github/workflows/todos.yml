@@ -13,7 +13,7 @@ on:
       - main
       - master
 env:
-  keywords: (" TODO", " TECHDEBT", " IMPROVE", " DISCUSS", " INCOMPLETE", " INVESTIGATE", " CLEANUP", " HACK", " REFACTOR", " CONSIDERATION", " TODO_IN_THIS_COMMIT", " DISCUSS_IN_THIS_COMMIT", " CONSOLIDATE", " DEPRECATE", " ADDTEST", " RESEARCH" )
+  keywords: '[" TODO", " TECHDEBT", " IMPROVE", " DISCUSS", " INCOMPLETE", " INVESTIGATE", " CLEANUP", " HACK", " REFACTOR", " CONSIDERATION", " TODO_IN_THIS_COMMIT", " DISCUSS_IN_THIS_COMMIT", " CONSOLIDATE", " DEPRECATE", " ADDTEST", " RESEARCH" ]'
 permissions:
   issues: write
   repository-projects: read

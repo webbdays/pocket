@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run Issue Bot
-        uses: .github/actions/todo-issue@main
+        uses: ./.github/actions/todo-issue
         with:
           excludePattern: '^(node_modules/)'
           keywords : ${{ fromJson(env.keywords) }}

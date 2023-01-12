@@ -30,6 +30,6 @@ jobs:
         uses: .github/actions/todo-issue@main
         with:
           excludePattern: '^(node_modules/)'
-          keywords : ${{ fromJson( ${{ env.keywords }} ) }}
+          keywords : ${{ fromJson(env.keywords) }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
